@@ -1,6 +1,5 @@
-import type { QueryResolvers } from "./../../../types.generated";
 import { prisma } from "../../../../db.js";
-// import { faker } from "@faker-js/faker";
+import type { QueryResolvers } from "./../../../types.generated";
 
 export const product: NonNullable<QueryResolvers["product"]> = async (
   _parent,
@@ -8,10 +7,10 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
   _ctx,
 ) => {
   /* Implement Query.product resolver logic here */
-  const product = await prisma.product.findUnique({
+  const result = await prisma.product.findUnique({
     where: {
       id: _arg.id,
     },
   });
-  return product;
+  return result;
 };
