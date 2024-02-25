@@ -1,11 +1,48 @@
 extend type Query {
 	product(id: ID!): Product
+	products(take: Int!, skip: Int!): [Product!]!
+	category(id: ID!): Category
+	categories(where: WhereInput!): [Category!]!
+}
+
+input WhereInput {
+	slug: String!
 }
 
 type Product {
 	id: ID!
 	name: String!
 	slug: String!
+	categoryId: ID!
 	description: String!
+	longDescription: String!
 	price: Int!
+	rating: Int!
+	image: String!
 }
+
+type Category {
+	id: ID!
+	name: String!
+	slug: String!
+	description: String!
+	products: [Product!]!
+}
+
+# type Rating {
+# 	id: ID!
+# 	rate: Int!
+# 	count: Int!
+# 	products: [Product]
+# }
+
+# type Image {
+# 	id: ID!
+# 	url: String!
+# 	products: [Product]
+# }
+
+# type Products {
+# 	products: [Product]!
+# 	total: Int!
+# }
