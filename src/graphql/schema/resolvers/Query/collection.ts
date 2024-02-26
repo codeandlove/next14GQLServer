@@ -1,20 +1,20 @@
 import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
-export const category: NonNullable<QueryResolvers["category"]> = async (
+export const collection: NonNullable<QueryResolvers["collection"]> = async (
   _parent,
   _arg,
   _ctx,
 ) => {
-  /* Implement Query.category resolver logic here */
+  /* Implement Query.collection resolver logic here */
 
   if (!_arg.id && !_arg.slug) {
-    throw new Error("id or slug is required for Query.category");
+    throw new Error("id or slug is required for Query.collection");
   }
 
   let result;
 
   if (_arg.id) {
-    result = await prisma.category.findUnique({
+    result = await prisma.collection.findUnique({
       where: {
         id: _arg.id,
       },
@@ -27,7 +27,7 @@ export const category: NonNullable<QueryResolvers["category"]> = async (
   }
 
   if (_arg.slug) {
-    result = await prisma.category.findFirstOrThrow({
+    result = await prisma.collection.findFirstOrThrow({
       where: {
         slug: _arg.slug,
       },

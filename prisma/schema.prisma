@@ -11,20 +11,31 @@ datasource db {
 }
 
 model Product {
-  id          String @id @default(cuid())
-  name        String
-  slug        String
-  description String
+  id              String @id @default(cuid())
+  name            String
+  slug            String
+  description     String
   longDescription String
-  price       Int
-  image       String
-  status      String
-  rating      Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  price           Int
+  image           String
+  status          String
+  rating          Int
+
+  categories      Category[]
+  collections     Collection[]
+  cart            Cart[]
+  order           Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id          String @id @default(cuid())
+  products    Product[]
+  total       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Category {
@@ -35,18 +46,27 @@ model Category {
   products    Product[]
 }
 
-// model Image {
-//   id          String @id @default(cuid())
-//   url         String
-// }
+model Collection {
+  id          String @id @default(cuid())
+  name        String
+  slug        String 
+  description String
+  products    Product[]
+}
 
-// model Rating {
-//   id          String @id @default(cuid())
-//   rating      Float
-//   count       Int
-// }
+model Order {
+  id          String @id @default(cuid())
+  products    Product[]
+  totalAmount Int
+  status      OrderStatus
+  lines       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
-// enum Status {
-//   INSTOCK
-//   OUTOFSTOCK
-// }
+enum OrderStatus {
+  PAID
+	FULFILLED
+	CREATED
+	CANCELLED
+}
