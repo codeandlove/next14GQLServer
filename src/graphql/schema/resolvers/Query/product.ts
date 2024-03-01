@@ -1,4 +1,4 @@
-import { prisma } from "@/db";
+import { prisma } from "../../../../db";
 import type { QueryResolvers } from "./../../../types.generated";
 export const product: NonNullable<QueryResolvers["product"]> = async (_parent, _arg, _ctx) => {
 	/* Implement Query.product resolver logic here */
@@ -26,7 +26,7 @@ export const product: NonNullable<QueryResolvers["product"]> = async (_parent, _
 			include: { categories: true, collections: true },
 		});
 	}
-  
+
 	if (!result) {
 		throw new Error("Product not found");
 	}

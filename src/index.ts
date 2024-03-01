@@ -11,14 +11,14 @@ const armor = new ApolloArmor({
   },
 });
 
-const server = new ApolloServer({
+const index = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   ...armor.protect()
 });
 
-const { url } = await startStandaloneServer(server, {
+const { url } = await startStandaloneServer(index, {
   listen: { port: 4000 }
 });
 
