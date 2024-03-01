@@ -1,10 +1,11 @@
 .env
 ./*/.env
+.idea
 
 /node_modules
 /prisma/seed.ts
 /prisma/migrations/*
+!/prisma/schema.prisma
 
 /docker
 
-.idea
