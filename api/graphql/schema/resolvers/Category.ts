@@ -1,10 +1,10 @@
-import { prisma } from "@/db";
-import type { CollectionResolvers } from "./../../types.generated";
-export const Collection: CollectionResolvers = {
-	/* Implement Collection resolver logic here */
+import { prisma } from "../../../db";
+import type { CategoryResolvers } from "../../types.generated";
+export const Category: CategoryResolvers = {
+	/* Implement Category resolver logic here */
 
 	async products(_parent, _arg, _ctx) {
-		const result = await prisma.collection.findUnique({
+		const result = await prisma.category.findUnique({
 			where: {
 				id: _parent.id,
 			},
@@ -17,7 +17,7 @@ export const Collection: CollectionResolvers = {
 		});
 
 		if (!result) {
-			throw new Error("Collection not found");
+			throw new Error("Category not found");
 		}
 
 		return (

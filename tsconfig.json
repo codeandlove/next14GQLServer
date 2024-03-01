@@ -1,6 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
+		"baseUrl": "api/",
 		"target": "ESNext",
 		"lib": ["ESNext"],
 		"allowJs": true,
@@ -16,8 +17,11 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"paths": {
-			"@/*": ["./src/*"]
-		}
+			"@/*": ["./api/*"]
+		},
 	},
+	"include": [
+		"api", "api/**/*", "api/{.ts, .tsx}"
+	],
 	"exclude": ["node_modules"]
 }

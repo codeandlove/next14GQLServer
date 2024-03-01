@@ -7,7 +7,7 @@
     "codegen": "graphql-codegen --config .graphqlrc.ts",
     "prisma-migrate": "pnpm prisma migrate dev",
     "prisma-generate": "pnpm prisma generate",
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch api/server.ts",
     "seed": "tsx prisma/seed.ts",
     "start": "tsx src/server.ts",
     "postinstall": "prisma generate"

@@ -1,4 +1,4 @@
-import { prisma } from "@/db";
+import { prisma } from "../../../db";
 import type { ProductResolvers } from "./../../types.generated";
 export const Product: ProductResolvers = {
 	/* Implement Product resolver logic here */
@@ -12,7 +12,7 @@ export const Product: ProductResolvers = {
 				categories: true,
 			},
 		});
-		
+
 		if (!result) {
 			throw new Error("Categories not found");
 		}

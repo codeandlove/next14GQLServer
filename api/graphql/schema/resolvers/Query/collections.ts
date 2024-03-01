@@ -1,4 +1,4 @@
-import { prisma } from "@/db";
+import { prisma } from "../../../../db";
 import type { QueryResolvers } from "./../../../types.generated";
 export const collections: NonNullable<QueryResolvers["collections"]> = async (
 	_parent,
