@@ -6,6 +6,5 @@
 /prisma/migrations/*
 
 /docker
-.vercel
 
 .idea

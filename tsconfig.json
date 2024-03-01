@@ -17,11 +17,11 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"paths": {
-			"@/*": ["./api/*"]
+			"@/*": ["./src/*"]
 		},
 	},
 	"include": [
-		"api", "api/**/*", "api/{.ts, .tsx}"
+		"api", "src/**/*", "src/{.ts, .tsx}"
 	],
 	"exclude": ["node_modules"]
 }
