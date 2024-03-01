@@ -1,8 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"target": "es2022",
-		"lib": ["es2022"],
+		"target": "ESNext",
+		"lib": ["ESNext"],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,

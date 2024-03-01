@@ -1,39 +1,41 @@
 extend type Query {
-	cart(id: ID!): Cart
+	# cart(id: ID!): Cart
 
-	category(id: ID, slug: String): Category
+	category(id: ID, slug: String): Category!
 
 	categories(take: Int!, skip: Int!): CategoryList!
 
-	collection(id: ID, slug: String): Collection
+	collection(id: ID, slug: String): Collection!
 
 	collections(take: Int!, skip: Int!): CollectionList!
 
-	order(id: ID!): Order
+	# order(id: ID!): Order
 
-	orders(email: String!, order: SortDirection! = ASC, orderBy: OrderSortBy! = DEFAULT, take: Int!, skip: Int!): OrderList!
+	# orders(email: String!, order: SortDirection! = ASC, orderBy: OrderSortBy! = DEFAULT, take: Int!, skip: Int!): OrderList!
 
-	product(id: ID, slug: String): Product
+	product(id: ID, slug: String): Product!
 
 	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, search: String, take: Int!, skip: Int!): ProductList!
+
 }
 
-type Cart {
-	id: ID!
-	items: [CartItem!]!
-}
 
-type CartItem {
-	product: Product!
-	quantity: Int!
-}
+# type Cart {
+# 	id: ID!
+# 	items: [CartItem!]!
+# }
+
+# type CartItem {
+# 	product: Product!
+# 	quantity: Int!
+# }
 
 type Category {
 	id: ID!
 	name: String!
 	slug: String!
 	description: String!
-	products: [Product!]!
+	products(take: Int!, skip: Int!): [Product!]!
 }
 
 type CategoryList {
@@ -46,7 +48,7 @@ type Collection {
 	name: String!
 	slug: String!
 	description: String!
-	products: [Product!]!
+	products(take: Int!, skip: Int!): [Product!]!
 }
 
 type CollectionList {
@@ -58,13 +60,14 @@ type Product {
 	id: ID!
 	name: String!
 	slug: String!
-	categories: [Category!]!
-	collections: [Collection!]!
 	description: String!
 	longDescription: String!
 	price: Int!
-	rating: Int!
 	image: String!
+	status: String!
+	rating: Int!
+	categories: [Category!]!
+	collections: [Collection!]!
 }
 
 type ProductList {
@@ -72,19 +75,21 @@ type ProductList {
 	meta: Meta!
 }
 
-type Order {
-	id: ID!
-	totalAmount: Int!
-	status: OrderStatus!
-	lines: String!
-	createAt: String!
-	updaetAt: String!
-}
+# type Order {
+# 	id: ID!
+# 	totalAmount: Int!
+# 	status: OrderStatus!
+# 	lines: String!
+# 	createAt: DateTime!
+# 	updaetAt: DateTime!
+# }
 
-type OrderList {
-	data: [Order!]!
-	meta: Meta!
-}
+# type OrderList {
+# 	data: [Order!]!
+# 	meta: Meta!
+# }
+
+scalar DateTime
 
 type Meta {
 	count: Int!

@@ -1,59 +1,37 @@
 import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
-export const product: NonNullable<QueryResolvers["product"]> = async (
-  _parent,
-  _arg,
-  _ctx,
-) => {
-  /* Implement Query.product resolver logic here */
+export const product: NonNullable<QueryResolvers["product"]> = async (_parent, _arg, _ctx) => {
+	/* Implement Query.product resolver logic here */
 
-  if (!_arg.id && !_arg.slug) {
-    throw new Error("id or slug is required for Query.product");
-  }
+	if (!_arg.id && !_arg.slug) {
+		throw new Error("id or slug is required for Query.product");
+	}
 
-  let result;
+	let result;
 
-  if (_arg.id) {
-    result = await prisma.product.findUnique({
-      where: {
-        id: _arg.id,
-      },
-      include: {
-        categories: {
-          include: {
-            products: true,
-          },
-        },
-        collections: {
-          include: {
-            products: true,
-          },
-        },
-      },
-    });
+	if (_arg.id) {
+		result = await prisma.product.findUnique({
+			where: {
+				id: _arg.id,
+			},
+			include: { categories: true, collections: true },
+		});
+	}
 
-    return result;
-  }
+	if (_arg.slug) {
+		result = await prisma.product.findUnique({
+			where: {
+				slug: _arg.slug,
+			},
+			include: { categories: true, collections: true },
+		});
 
-  if (_arg.slug) {
-    result = await prisma.product.findFirstOrThrow({
-      where: {
-        slug: _arg.slug,
-      },
-      include: {
-        categories: {
-          include: {
-            products: true,
-          },
-        },
-        collections: {
-          include: {
-            products: true,
-          },
-        },
-      },
-    });
+		result = result;
+	}
 
-    return result;
-  }
+	if (!result) {
+		throw new Error("Product not found");
+	}
+
+	return { ...result, categories: [], collections: [] };
 };

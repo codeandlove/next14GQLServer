@@ -1,24 +1,23 @@
 import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
 export const categories: NonNullable<QueryResolvers["categories"]> = async (
-  _parent,
-  _arg,
-  _ctx,
+	_parent,
+	_arg,
+	_ctx,
 ) => {
-  /* Implement Query.categories resolver logic here */
+	/* Implement Query.categories resolver logic here */
 
-  const total = await prisma.category.count();
-  const result = await prisma.category.findMany({
-    include: {
-      products: {
-        take: _arg.take,
-        skip: _arg.skip,
-      },
-    },
-  });
+	const total = await prisma.category.count();
+	const result = await prisma.category.findMany({
+		skip: _arg.skip,
+		take: _arg.take,
+		include: {
+			products: true,
+		},
+	});
 
-  return {
-    data: result,
-    meta: { count: result.length, total: total },
-  };
+	return {
+		data: result.map((collection) => ({ ...collection, products: [] })),
+		meta: { count: result.length, total: total },
+	};
 };

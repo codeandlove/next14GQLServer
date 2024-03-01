@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -20,22 +21,22 @@ model Product {
   image           String
   status          String
   rating          Int
-
+  
+  cartItems       CartItem[]
+  carts           Cart[]
   categories      Category[]
   collections     Collection[]
-  cart            Cart[]
   order           Order[]
-
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([slug])
 }
 
 model Cart {
   id          String @id @default(cuid())
-  products    Product[]
-  total       Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  items       Product[]
 }
 
 model Category {
@@ -44,6 +45,8 @@ model Category {
   slug        String 
   description String
   products    Product[]
+
+  @@unique([slug])
 }
 
 model Collection {
@@ -52,6 +55,8 @@ model Collection {
   slug        String 
   description String
   products    Product[]
+
+  @@unique([slug])
 }
 
 model Order {
@@ -62,6 +67,12 @@ model Order {
   lines       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model CartItem {
+  id          String @id @default(cuid())
+  product     Product[]
+  quantity    Int
 }
 
 enum OrderStatus {

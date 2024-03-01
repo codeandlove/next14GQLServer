@@ -3,16 +3,19 @@ import { defineConfig } from "@eddeee888/gcg-typescript-resolver-files";
 
 const config = {
   overwrite: true,
-  schema: "./src/schema/**/*.graphql",
+  schema: "./src/schema/*.graphql",
   generates: {
     "src/graphql/": defineConfig({
       typesPluginsConfig: {
-        optionalInfoArgument: true,
+        optionalInfoArgument: true
       },
       scalarsOverrides: {
         ID: {
           type: "string",
         },
+        DateTime: {
+          type: "Date"
+        }
       },
     }),
   },

@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
 
-const productsCount = 500;
+const productsCount = 50;
 
 const findUniques = (arr: Array<Object>) => {
   return arr.filter((value, index, self) => {
@@ -12,10 +12,22 @@ const findUniques = (arr: Array<Object>) => {
 }
 
 const getMultipleRandom = (arr: Array<Object>, num: number) => {
-  const shuffled = [...arr].sort(() => 0.5 - Math.random());
-
-  return shuffled.slice(0, num);
+  return [...arr].sort(() => Math.random() - Math.random()).slice(0, num);
 }
+
+const uniqueProductsNames:string[] = [];
+
+const findUniqueName = (name:string):string => {
+  if(uniqueProductsNames.indexOf(name) === -1) {
+    return name;
+  }
+  return findUniqueName(faker.commerce.productName());
+}
+
+Array.from({ length: productsCount }).forEach(() => {
+  const name = findUniqueName(faker.commerce.productName());
+  uniqueProductsNames.push(name);
+});
 
 //Categories
 const categoriesNames = ['T-hirts', 'Shoes', 'Shorts', 'Underwear', 'Pants', 'Jackets', 'Hats', 'Socks'];
@@ -55,9 +67,12 @@ for (let i = 0; i < collectionsCount; i++) {
 
 //Products
 for (let i = 0; i < productsCount; i++) {
-  const name = faker.commerce.productName();
-  const pickedCategories = getMultipleRandom(categories, Math.floor(Math.random() * categoriesCount - 1) + 1) as Array<Category>;
-  const pickedCollections = getMultipleRandom(collections, Math.floor(Math.random() * collectionsCount - 1) + 1) as Array<Collection>
+  const name = uniqueProductsNames[i];
+  const pickedCategories = getMultipleRandom(categories, Math.floor(Math.random() * categoriesCount) + 1) as Array<Category>;
+  const pickedCollections = getMultipleRandom(collections, Math.floor(Math.random() * collectionsCount) + 1) as Array<Collection>
+
+  console.log(pickedCategories.map((category) => category.name));
+  console.log(pickedCollections.map((category) => category.name));
 
   const createdProduct = await prisma.product.create({
     data: {
