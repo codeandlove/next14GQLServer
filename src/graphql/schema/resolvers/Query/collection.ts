@@ -29,8 +29,6 @@ export const collection: NonNullable<QueryResolvers["collection"]> = async (
 			},
 			include: { products: true },
 		});
-
-		result = result;
 	}
 
 	if (!result) {

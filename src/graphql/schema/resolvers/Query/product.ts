@@ -25,10 +25,8 @@ export const product: NonNullable<QueryResolvers["product"]> = async (_parent, _
 			},
 			include: { categories: true, collections: true },
 		});
-
-		result = result;
 	}
-
+  
 	if (!result) {
 		throw new Error("Product not found");
 	}

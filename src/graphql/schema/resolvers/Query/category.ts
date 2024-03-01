@@ -25,8 +25,6 @@ export const category: NonNullable<QueryResolvers["category"]> = async (_parent,
 			},
 			include: { products: true },
 		});
-
-		result = result;
 	}
 
 	if (!result) {
