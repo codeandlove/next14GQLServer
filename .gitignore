@@ -2,6 +2,8 @@
 ./*/.env
 
 /node_modules
+/prisma/seed.ts
+/prisma/migrations/*
 
 /prisma/*
 !/prisma/schema.prisma
