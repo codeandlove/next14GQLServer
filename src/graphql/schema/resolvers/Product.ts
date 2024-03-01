@@ -12,7 +12,7 @@ export const Product: ProductResolvers = {
 				categories: true,
 			},
 		});
-
+		
 		if (!result) {
 			throw new Error("Categories not found");
 		}
