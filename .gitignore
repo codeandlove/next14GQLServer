@@ -2,5 +2,7 @@
 ./*/.env
 
 /node_modules
+/prisma/seed.ts
+/prisma/migrations/*
 
 /docker
