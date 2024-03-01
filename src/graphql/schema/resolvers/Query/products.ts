@@ -1,22 +1,39 @@
-import { prisma } from "../../../../db.js";
+import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
 
-export const products: NonNullable<QueryResolvers["products"]> = async (
-  _parent,
-  _arg,
-  _ctx,
-) => {
-  const total = await prisma.product.count();
-  /* Implement Query.products resolver logic here */
-  const result = await prisma.product.findMany({
-    take: _arg.take,
-    skip: _arg.skip,
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      category: true,
-    },
-  });
-  return result;
+export const products: NonNullable<QueryResolvers["products"]> = async (_parent, _arg, _ctx) => {
+	/* Implement Query.products resolver logic here */
+
+	let result;
+	const total = await prisma.product.count();
+
+	if (_arg.search) {
+		result = await prisma.product.findMany({
+			skip: _arg.skip,
+			take: _arg.take,
+			where: {
+				name: {
+					search: _arg.search,
+				}
+			},
+			include: {
+				categories: true,
+				collections: true,
+			},
+		});
+	} else {
+		result = await prisma.product.findMany({
+			skip: _arg.skip,
+			take: _arg.take,
+			include: {
+				categories: true,
+				collections: true,
+			},
+		});
+	}
+
+	return {
+		data: result.map((product) => ({ ...product, categories: [], collections: [] })),
+		meta: { count: result.length, total: total },
+	};
 };

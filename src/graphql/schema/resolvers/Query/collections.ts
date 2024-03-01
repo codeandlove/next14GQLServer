@@ -1,14 +1,14 @@
 import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
-export const categories: NonNullable<QueryResolvers["categories"]> = async (
+export const collections: NonNullable<QueryResolvers["collections"]> = async (
 	_parent,
 	_arg,
 	_ctx,
 ) => {
-	/* Implement Query.categories resolver logic here */
+	/* Implement Query.collections resolver logic here */
 
-	const total = await prisma.category.count();
-	const result = await prisma.category.findMany({
+	const total = await prisma.collection.count();
+	const result = await prisma.collection.findMany({
 		skip: _arg.skip,
 		take: _arg.take,
 		include: {

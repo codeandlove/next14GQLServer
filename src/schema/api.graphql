@@ -1,0 +1,121 @@
+extend type Query {
+	# cart(id: ID!): Cart
+
+	category(id: ID, slug: String): Category!
+
+	categories(take: Int!, skip: Int!): CategoryList!
+
+	collection(id: ID, slug: String): Collection!
+
+	collections(take: Int!, skip: Int!): CollectionList!
+
+	# order(id: ID!): Order
+
+	# orders(email: String!, order: SortDirection! = ASC, orderBy: OrderSortBy! = DEFAULT, take: Int!, skip: Int!): OrderList!
+
+	product(id: ID, slug: String): Product!
+
+	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, search: String, take: Int!, skip: Int!): ProductList!
+
+}
+
+
+# type Cart {
+# 	id: ID!
+# 	items: [CartItem!]!
+# }
+
+# type CartItem {
+# 	product: Product!
+# 	quantity: Int!
+# }
+
+type Category {
+	id: ID!
+	name: String!
+	slug: String!
+	description: String!
+	products(take: Int!, skip: Int!): [Product!]!
+}
+
+type CategoryList {
+	data: [Category!]!
+	meta: Meta!
+}
+
+type Collection {
+	id: ID!
+	name: String!
+	slug: String!
+	description: String!
+	products(take: Int!, skip: Int!): [Product!]!
+}
+
+type CollectionList {
+	data: [Collection!]!
+	meta: Meta!
+}
+
+type Product {
+	id: ID!
+	name: String!
+	slug: String!
+	description: String!
+	longDescription: String!
+	price: Int!
+	image: String!
+	status: String!
+	rating: Int!
+	categories: [Category!]!
+	collections: [Collection!]!
+}
+
+type ProductList {
+	data: [Product!]!
+	meta: Meta!
+}
+
+# type Order {
+# 	id: ID!
+# 	totalAmount: Int!
+# 	status: OrderStatus!
+# 	lines: String!
+# 	createAt: DateTime!
+# 	updaetAt: DateTime!
+# }
+
+# type OrderList {
+# 	data: [Order!]!
+# 	meta: Meta!
+# }
+
+scalar DateTime
+
+type Meta {
+	count: Int!
+	total: Int!
+}
+
+enum OrderStatus {
+	PAID
+	FULFILLED
+	CREATED
+	CANCELLED
+}
+
+enum SortDirection {
+	ASC
+	DESC
+}
+
+enum OrderSortBy {
+	DEFAULT
+	STATUS
+	TOTAL
+}
+
+enum ProductsSortBy {
+	DEFAULT
+	PRICE
+	NAME
+}

@@ -8,13 +8,15 @@
     "prisma-migrate": "pnpm prisma migrate dev",
     "prisma-generate": "pnpm prisma generate",
     "dev": "tsx watch src/server.ts",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eddeee888/gcg-typescript-resolver-files": "^0.7.2",
+    "@escape.tech/graphql-armor": "^2.4.0",
     "@faker-js/faker": "^8.4.1",
     "@graphql-codegen/cli": "^5.0.2",
     "@parcel/watcher": "^2.4.0",

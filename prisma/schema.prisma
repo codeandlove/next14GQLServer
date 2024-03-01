@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -11,20 +12,31 @@ datasource db {
 }
 
 model Product {
-  id          String @id @default(cuid())
-  name        String
-  slug        String
-  description String
+  id              String @id @default(cuid())
+  name            String
+  slug            String
+  description     String
   longDescription String
-  price       Int
-  image       String
-  status      String
-  rating      Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String
-
+  price           Int
+  image           String
+  status          String
+  rating          Int
+  
+  cartItems       CartItem[]
+  carts           Cart[]
+  categories      Category[]
+  collections     Collection[]
+  order           Order[]
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([slug])
+}
+
+model Cart {
+  id          String @id @default(cuid())
+  items       Product[]
 }
 
 model Category {
@@ -33,20 +45,39 @@ model Category {
   slug        String 
   description String
   products    Product[]
+
+  @@unique([slug])
 }
 
-// model Image {
-//   id          String @id @default(cuid())
-//   url         String
-// }
+model Collection {
+  id          String @id @default(cuid())
+  name        String
+  slug        String 
+  description String
+  products    Product[]
 
-// model Rating {
-//   id          String @id @default(cuid())
-//   rating      Float
-//   count       Int
-// }
+  @@unique([slug])
+}
 
-// enum Status {
-//   INSTOCK
-//   OUTOFSTOCK
-// }
+model Order {
+  id          String @id @default(cuid())
+  products    Product[]
+  totalAmount Int
+  status      OrderStatus
+  lines       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CartItem {
+  id          String @id @default(cuid())
+  product     Product[]
+  quantity    Int
+}
+
+enum OrderStatus {
+  PAID
+	FULFILLED
+	CREATED
+	CANCELLED
+}

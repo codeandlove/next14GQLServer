@@ -1,16 +1,20 @@
 import { prisma } from "@/db";
 import type { QueryResolvers } from "./../../../types.generated";
-export const category: NonNullable<QueryResolvers["category"]> = async (_parent, _arg, _ctx) => {
-	/* Implement Query.category resolver logic here */
+export const collection: NonNullable<QueryResolvers["collection"]> = async (
+	_parent,
+	_arg,
+	_ctx,
+) => {
+	/* Implement Query.collection resolver logic here */
 
 	if (!_arg.id && !_arg.slug) {
-		throw new Error("id or slug is required for Query.category");
+		throw new Error("id or slug is required for Query.collection");
 	}
 
 	let result;
 
 	if (_arg.id) {
-		result = await prisma.category.findUnique({
+		result = await prisma.collection.findUnique({
 			where: {
 				id: _arg.id,
 			},
@@ -19,7 +23,7 @@ export const category: NonNullable<QueryResolvers["category"]> = async (_parent,
 	}
 
 	if (_arg.slug) {
-		result = await prisma.category.findUnique({
+		result = await prisma.collection.findUnique({
 			where: {
 				slug: _arg.slug,
 			},
@@ -30,7 +34,7 @@ export const category: NonNullable<QueryResolvers["category"]> = async (_parent,
 	}
 
 	if (!result) {
-		throw new Error("Category not found");
+		throw new Error("Collection not found");
 	}
 
 	return { ...result, products: [] };
