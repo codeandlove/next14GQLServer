@@ -13,7 +13,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (_parent,
 			take: _arg.take,
 			where: {
 				name: {
-					search: _arg.search,
+					search: `*${_arg.search}*`,
 				},
 			},
 			include: {
