@@ -67,6 +67,51 @@ export type Meta = {
 	total: Scalars["Int"]["output"];
 };
 
+export type Mutation = {
+	__typename?: "Mutation";
+	createOrder: Order;
+	createOrderItem: Order;
+	removeOrderItem: Order;
+	updateOrderItem: Order;
+};
+
+export type MutationcreateOrderItemArgs = {
+	orderId: Scalars["ID"]["input"];
+	productId: Scalars["ID"]["input"];
+	quantity: Scalars["Int"]["input"];
+};
+
+export type MutationremoveOrderItemArgs = {
+	orderId: Scalars["ID"]["input"];
+	productId: Scalars["ID"]["input"];
+};
+
+export type MutationupdateOrderItemArgs = {
+	orderId: Scalars["ID"]["input"];
+	productId: Scalars["ID"]["input"];
+	quantity: Scalars["Int"]["input"];
+};
+
+export type Order = {
+	__typename?: "Order";
+	createdAt: Scalars["DateTime"]["output"];
+	id: Scalars["ID"]["output"];
+	lines?: Maybe<Scalars["String"]["output"]>;
+	orderItems: Array<OrderItem>;
+	status: OrderStatus;
+	totalAmount: Scalars["Int"]["output"];
+	updatedAt: Scalars["DateTime"]["output"];
+};
+
+export type OrderItem = {
+	__typename?: "OrderItem";
+	id: Scalars["ID"]["output"];
+	orderId: Scalars["ID"]["output"];
+	product: Product;
+	productId: Scalars["ID"]["output"];
+	quantity: Scalars["Int"]["output"];
+};
+
 export type OrderSortBy = "DEFAULT" | "STATUS" | "TOTAL";
 
 export type OrderStatus = "CANCELLED" | "CREATED" | "FULFILLED" | "PAID";
@@ -100,6 +145,7 @@ export type Query = {
 	category: Category;
 	collection: Collection;
 	collections: CollectionList;
+	order: Order;
 	product: Product;
 	products: ProductList;
 };
@@ -122,6 +168,11 @@ export type QuerycollectionArgs = {
 export type QuerycollectionsArgs = {
 	skip: Scalars["Int"]["input"];
 	take: Scalars["Int"]["input"];
+};
+
+export type QueryorderArgs = {
+	id: Scalars["ID"]["input"];
+	status?: InputMaybe<OrderStatus>;
 };
 
 export type QueryproductArgs = {
@@ -232,6 +283,9 @@ export type ResolversTypes = {
 	CollectionList: ResolverTypeWrapper<CollectionList>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
 	Meta: ResolverTypeWrapper<Meta>;
+	Mutation: ResolverTypeWrapper<{}>;
+	Order: ResolverTypeWrapper<Order>;
+	OrderItem: ResolverTypeWrapper<OrderItem>;
 	OrderSortBy: OrderSortBy;
 	OrderStatus: OrderStatus;
 	Product: ResolverTypeWrapper<Product>;
@@ -253,6 +307,9 @@ export type ResolversParentTypes = {
 	CollectionList: CollectionList;
 	DateTime: Scalars["DateTime"]["output"];
 	Meta: Meta;
+	Mutation: {};
+	Order: Order;
+	OrderItem: OrderItem;
 	Product: Product;
 	ProductList: ProductList;
 	Query: {};
@@ -326,6 +383,57 @@ export type MetaResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MutationResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
+> = {
+	createOrder?: Resolver<ResolversTypes["Order"], ParentType, ContextType>;
+	createOrderItem?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcreateOrderItemArgs, "orderId" | "productId" | "quantity">
+	>;
+	removeOrderItem?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationremoveOrderItemArgs, "orderId" | "productId">
+	>;
+	updateOrderItem?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationupdateOrderItemArgs, "orderId" | "productId" | "quantity">
+	>;
+};
+
+export type OrderResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
+> = {
+	createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	lines?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+	orderItems?: Resolver<Array<ResolversTypes["OrderItem"]>, ParentType, ContextType>;
+	status?: Resolver<ResolversTypes["OrderStatus"], ParentType, ContextType>;
+	totalAmount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OrderItemResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["OrderItem"] = ResolversParentTypes["OrderItem"],
+> = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	orderId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	productId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	quantity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProductResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
@@ -381,6 +489,12 @@ export type QueryResolvers<
 		ContextType,
 		RequireFields<QuerycollectionsArgs, "skip" | "take">
 	>;
+	order?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<QueryorderArgs, "id">
+	>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
 	products?: Resolver<
 		ResolversTypes["ProductList"],
@@ -397,6 +511,9 @@ export type Resolvers<ContextType = any> = {
 	CollectionList?: CollectionListResolvers<ContextType>;
 	DateTime?: GraphQLScalarType;
 	Meta?: MetaResolvers<ContextType>;
+	Mutation?: MutationResolvers<ContextType>;
+	Order?: OrderResolvers<ContextType>;
+	OrderItem?: OrderItemResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	ProductList?: ProductListResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;

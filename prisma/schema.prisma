@@ -21,22 +21,15 @@ model Product {
   image           String
   status          String
   rating          Int
-  
-  cartItems       CartItem[]
-  carts           Cart[]
+
   categories      Category[]
   collections     Collection[]
-  order           Order[]
+  orderItem       OrderItem[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([slug])
-}
-
-model Cart {
-  id          String @id @default(cuid())
-  items       Product[]
 }
 
 model Category {
@@ -61,18 +54,21 @@ model Collection {
 
 model Order {
   id          String @id @default(cuid())
-  products    Product[]
+  orderItems  OrderItem[]
   totalAmount Int
   status      OrderStatus
-  lines       String
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model CartItem {
+model OrderItem {
   id          String @id @default(cuid())
-  product     Product[]
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String @unique
   quantity    Int
+  order       Order @relation(fields: [orderId], references: [id])
+  orderId     String 
 }
 
 enum OrderStatus {
