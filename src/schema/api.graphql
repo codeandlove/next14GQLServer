@@ -1,6 +1,4 @@
 extend type Query {
-	# cart(id: ID!): Cart
-
 	category(id: ID, slug: String): Category!
 
 	categories(take: Int!, skip: Int!): CategoryList!
@@ -9,7 +7,7 @@ extend type Query {
 
 	collections(take: Int!, skip: Int!): CollectionList!
 
-	# order(id: ID!): Order
+	order(id: ID!, status: OrderStatus): Order!
 
 	# orders(email: String!, order: SortDirection! = ASC, orderBy: OrderSortBy! = DEFAULT, take: Int!, skip: Int!): OrderList!
 
@@ -19,16 +17,14 @@ extend type Query {
 
 }
 
+extend type Mutation {
+	createOrder: Order!
 
-# type Cart {
-# 	id: ID!
-# 	items: [CartItem!]!
-# }
+	createOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
+	updateOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
+	removeOrderItem( orderId: ID!, productId: ID!): Order!
 
-# type CartItem {
-# 	product: Product!
-# 	quantity: Int!
-# }
+}
 
 type Category {
 	id: ID!
@@ -75,19 +71,23 @@ type ProductList {
 	meta: Meta!
 }
 
-# type Order {
-# 	id: ID!
-# 	totalAmount: Int!
-# 	status: OrderStatus!
-# 	lines: String!
-# 	createAt: DateTime!
-# 	updaetAt: DateTime!
-# }
+type Order {
+	id: ID!
+	totalAmount: Int!
+	status: OrderStatus!
+	orderItems: [OrderItem!]!
+	lines: String
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
 
-# type OrderList {
-# 	data: [Order!]!
-# 	meta: Meta!
-# }
+type OrderItem {
+	id: ID!
+	quantity: Int!
+	product: Product!
+	productId: ID!
+	orderId: ID!
+}
 
 scalar DateTime
 
