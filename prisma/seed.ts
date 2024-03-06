@@ -38,7 +38,7 @@ Array.from({ length: productsCount }).forEach(() => {
 });
 
 //Categories
-const categoriesNames = ['T-hirts', 'Shoes', 'Shorts', 'Underwear', 'Pants', 'Jackets', 'Hats', 'Socks'];
+const categoriesNames = ['T-hirts', 'Shoes', 'Shorts', 'Underwear'];
 const categoriesCount = categoriesNames.length;
 const categories:categoryItem[] = [];
 
@@ -56,7 +56,7 @@ for (let i = 0; i < categoriesCount; i++) {
 }
 
 //Callections
-const collectionsNames = ['Summer', 'Winter', 'Spring', 'Autumn', 'All Year'];
+const collectionsNames = ['Summer', 'Winter', 'Spring', 'Autumn'];
 const collectionsCount = collectionsNames.length;
 const collections:collectionItem[] = [];
 
