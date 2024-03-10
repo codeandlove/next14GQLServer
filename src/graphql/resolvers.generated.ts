@@ -7,6 +7,7 @@ import { CollectionList } from "./schema/resolvers/CollectionList";
 import { Meta } from "./schema/resolvers/Meta";
 import { createOrder as Mutation_createOrder } from "./schema/resolvers/Mutation/createOrder";
 import { createOrderItem as Mutation_createOrderItem } from "./schema/resolvers/Mutation/createOrderItem";
+import { createReview as Mutation_createReview } from "./schema/resolvers/Mutation/createReview";
 import { removeOrderItem as Mutation_removeOrderItem } from "./schema/resolvers/Mutation/removeOrderItem";
 import { updateOrderItem as Mutation_updateOrderItem } from "./schema/resolvers/Mutation/updateOrderItem";
 import { Order } from "./schema/resolvers/Order";
@@ -20,6 +21,8 @@ import { collections as Query_collections } from "./schema/resolvers/Query/colle
 import { order as Query_order } from "./schema/resolvers/Query/order";
 import { product as Query_product } from "./schema/resolvers/Query/product";
 import { products as Query_products } from "./schema/resolvers/Query/products";
+import { reviews as Query_reviews } from "./schema/resolvers/Query/reviews";
+import { Review } from "./schema/resolvers/Review";
 import { DateTimeResolver } from "graphql-scalars";
 export const resolvers: Resolvers = {
 	Query: {
@@ -30,10 +33,12 @@ export const resolvers: Resolvers = {
 		order: Query_order,
 		product: Query_product,
 		products: Query_products,
+		reviews: Query_reviews,
 	},
 	Mutation: {
 		createOrder: Mutation_createOrder,
 		createOrderItem: Mutation_createOrderItem,
+		createReview: Mutation_createReview,
 		removeOrderItem: Mutation_removeOrderItem,
 		updateOrderItem: Mutation_updateOrderItem,
 	},
@@ -47,5 +52,6 @@ export const resolvers: Resolvers = {
 	OrderItem: OrderItem,
 	Product: Product,
 	ProductList: ProductList,
+	Review: Review,
 	DateTime: DateTimeResolver,
 };

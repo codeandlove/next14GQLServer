@@ -17,7 +17,7 @@ export const categories: NonNullable<QueryResolvers["categories"]> = async (
 	});
 
 	return {
-		data: result.map((collection) => ({ ...collection, products: [] })),
+		data: result.map((category) => ({ ...category, products: [] })),
 		meta: { count: result.length, total: total },
 	};
 };

@@ -21,11 +21,12 @@ model Product {
   image           String
   status          String
   rating          Int
-
+  
   categories      Category[]
   collections     Collection[]
   orderItem       OrderItem[]
-  
+  reviews         Review[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -65,10 +66,12 @@ model Order {
 model OrderItem {
   id          String @id @default(cuid())
   product     Product @relation(fields: [productId], references: [id])
-  productId   String @unique
+  productId   String
   quantity    Int
   order       Order @relation(fields: [orderId], references: [id])
-  orderId     String 
+  orderId     String
+
+  @@unique([productId, orderId])
 }
 
 enum OrderStatus {
@@ -76,4 +79,17 @@ enum OrderStatus {
 	FULFILLED
 	CREATED
 	CANCELLED
+}
+
+model Review {
+  id          String @id @default(cuid())
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String
+  
+  headline    String
+  content     String
+  rating      Int
+  name        String
+  email       String
+  createdAt   DateTime @default(now())
 }

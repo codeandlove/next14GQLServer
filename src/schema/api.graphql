@@ -9,12 +9,11 @@ extend type Query {
 
 	order(id: ID!, status: OrderStatus): Order!
 
-	# orders(email: String!, order: SortDirection! = ASC, orderBy: OrderSortBy! = DEFAULT, take: Int!, skip: Int!): OrderList!
-
 	product(id: ID, slug: String): Product!
 
 	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, search: String, take: Int!, skip: Int!): ProductList!
 
+	reviews(productId: ID!): [Review!]!
 }
 
 extend type Mutation {
@@ -23,6 +22,8 @@ extend type Mutation {
 	createOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
 	updateOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
 	removeOrderItem( orderId: ID!, productId: ID!): Order!
+
+	createReview( productId: ID!, headline: String!, content: String!, rating: Int!, name: String!, email: String!): Review!
 
 }
 
@@ -87,6 +88,16 @@ type OrderItem {
 	product: Product!
 	productId: ID!
 	orderId: ID!
+}
+
+type Review {
+	id: ID!
+	headline: String!
+	content: String!
+	rating: Int!
+	name: String!
+	email: String!
+	createdAt: DateTime!
 }
 
 scalar DateTime

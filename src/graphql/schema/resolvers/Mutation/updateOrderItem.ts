@@ -16,7 +16,10 @@ export const updateOrderItem: NonNullable<MutationResolvers["updateOrderItem"]> 
 			orderItems: {
 				update: {
 					where: {
-						productId: _arg.productId,
+						productId_orderId: {
+							orderId: _arg.orderId,
+							productId: _arg.productId,
+						}
 					},
 					data: {
 						quantity: _arg.quantity,
