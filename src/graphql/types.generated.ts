@@ -71,6 +71,7 @@ export type Mutation = {
 	__typename?: "Mutation";
 	createOrder: Order;
 	createOrderItem: Order;
+	createReview: Review;
 	removeOrderItem: Order;
 	updateOrderItem: Order;
 };
@@ -79,6 +80,15 @@ export type MutationcreateOrderItemArgs = {
 	orderId: Scalars["ID"]["input"];
 	productId: Scalars["ID"]["input"];
 	quantity: Scalars["Int"]["input"];
+};
+
+export type MutationcreateReviewArgs = {
+	content: Scalars["String"]["input"];
+	email: Scalars["String"]["input"];
+	headline: Scalars["String"]["input"];
+	name: Scalars["String"]["input"];
+	productId: Scalars["ID"]["input"];
+	rating: Scalars["Int"]["input"];
 };
 
 export type MutationremoveOrderItemArgs = {
@@ -148,6 +158,7 @@ export type Query = {
 	order: Order;
 	product: Product;
 	products: ProductList;
+	reviews: Array<Review>;
 };
 
 export type QuerycategoriesArgs = {
@@ -186,6 +197,21 @@ export type QueryproductsArgs = {
 	search?: InputMaybe<Scalars["String"]["input"]>;
 	skip: Scalars["Int"]["input"];
 	take: Scalars["Int"]["input"];
+};
+
+export type QueryreviewsArgs = {
+	productId: Scalars["ID"]["input"];
+};
+
+export type Review = {
+	__typename?: "Review";
+	content: Scalars["String"]["output"];
+	createdAt: Scalars["DateTime"]["output"];
+	email: Scalars["String"]["output"];
+	headline: Scalars["String"]["output"];
+	id: Scalars["ID"]["output"];
+	name: Scalars["String"]["output"];
+	rating: Scalars["Int"]["output"];
 };
 
 export type SortDirection = "ASC" | "DESC";
@@ -292,6 +318,7 @@ export type ResolversTypes = {
 	ProductList: ResolverTypeWrapper<ProductList>;
 	ProductsSortBy: ProductsSortBy;
 	Query: ResolverTypeWrapper<{}>;
+	Review: ResolverTypeWrapper<Review>;
 	SortDirection: SortDirection;
 	Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
 };
@@ -313,6 +340,7 @@ export type ResolversParentTypes = {
 	Product: Product;
 	ProductList: ProductList;
 	Query: {};
+	Review: Review;
 	Boolean: Scalars["Boolean"]["output"];
 };
 
@@ -393,6 +421,15 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderItemArgs, "orderId" | "productId" | "quantity">
+	>;
+	createReview?: Resolver<
+		ResolversTypes["Review"],
+		ParentType,
+		ContextType,
+		RequireFields<
+			MutationcreateReviewArgs,
+			"content" | "email" | "headline" | "name" | "productId" | "rating"
+		>
 	>;
 	removeOrderItem?: Resolver<
 		ResolversTypes["Order"],
@@ -502,6 +539,26 @@ export type QueryResolvers<
 		ContextType,
 		RequireFields<QueryproductsArgs, "order" | "orderBy" | "skip" | "take">
 	>;
+	reviews?: Resolver<
+		Array<ResolversTypes["Review"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryreviewsArgs, "productId">
+	>;
+};
+
+export type ReviewResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"],
+> = {
+	content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	headline?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
@@ -517,4 +574,5 @@ export type Resolvers<ContextType = any> = {
 	Product?: ProductResolvers<ContextType>;
 	ProductList?: ProductListResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
+	Review?: ReviewResolvers<ContextType>;
 };

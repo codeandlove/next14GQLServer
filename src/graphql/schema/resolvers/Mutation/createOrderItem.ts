@@ -7,6 +7,31 @@ export const createOrderItem: NonNullable<MutationResolvers["createOrderItem"]> 
 ) => {
 	/* Implement Mutation.createOrderItem resolver logic here */
 
+	let orderItem;
+
+	const order = await prisma.order.findUnique({
+		where: {
+			id: _arg.orderId,
+		},
+		include: {
+			orderItems: true,
+		},
+	});
+
+	console.log("asdasdasd1 -------------------- asdas das ");
+	console.log(order);
+	console.log("asdasdasd1 -------------------- asdas das ");
+
+	if (order) {
+		orderItem = order.orderItems.filter(async (orderItem) => {
+			return orderItem.productId === _arg.productId;
+		});
+	}
+
+	console.log("asdasdasd -------------------- asdas das ");
+	console.log(orderItem);
+	console.log("asdasdasd -------------------- asdas das ");
+
 	const result = await prisma.order.update({
 		where: {
 			id: _arg.orderId,
@@ -16,10 +41,13 @@ export const createOrderItem: NonNullable<MutationResolvers["createOrderItem"]> 
 			orderItems: {
 				upsert: {
 					where: {
-						productId: _arg.productId,
+						productId_orderId: {
+							productId: _arg.productId,
+							orderId: _arg.orderId,
+						},
 					},
 					update: {
-						quantity: _arg.quantity,
+						quantity: orderItem && orderItem[0] ? orderItem[0].quantity + _arg.quantity : _arg.quantity,
 					},
 					create: {
 						quantity: _arg.quantity,
@@ -30,27 +58,6 @@ export const createOrderItem: NonNullable<MutationResolvers["createOrderItem"]> 
 						},
 					},
 				},
-				// create: {
-				// 	quantity: _arg.quantity,
-				// 	product: {
-				// 		connect: {
-				// 			id: _arg.productId,
-				// 		},
-				// 	},
-				// },
-				// connectOrCreate: {
-				// 	where: {
-				// 		id: _arg.orderId,
-				// 	},
-				// 	create: {
-				// 		quantity: _arg.quantity + _arg.quantity * Math.floor(Math.random() * 10) + 800,
-				// 		product: {
-				// 			connect: {
-				// 				id: _arg.productId,
-				// 			},
-				// 		},
-				// 	},
-				// },
 			},
 		},
 		include: {

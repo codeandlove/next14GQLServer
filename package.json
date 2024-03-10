@@ -20,17 +20,17 @@
     "@escape.tech/graphql-armor": "^2.4.0",
     "@faker-js/faker": "^8.4.1",
     "@graphql-codegen/cli": "^5.0.2",
-    "@parcel/watcher": "^2.4.0",
+    "@parcel/watcher": "^2.4.1",
     "graphql": "^16.8.1",
     "prettier": "^3.2.5",
-    "prisma": "^5.9.1",
+    "prisma": "^5.10.2",
     "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "dependencies": {
-    "@apollo/server": "^4.10.0",
-    "@prisma/client": "^5.9.1",
-    "graphql-scalars": "^1.22.4"
+    "@apollo/server": "^4.10.1",
+    "@prisma/client": "^5.10.2",
+    "graphql-scalars": "^1.22.5"
   },
   "type": "module"
 }
