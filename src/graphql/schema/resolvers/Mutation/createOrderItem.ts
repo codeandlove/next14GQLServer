@@ -47,7 +47,8 @@ export const createOrderItem: NonNullable<MutationResolvers["createOrderItem"]> 
 						},
 					},
 					update: {
-						quantity: orderItem && orderItem[0] ? orderItem[0].quantity + _arg.quantity : _arg.quantity,
+						quantity:
+							orderItem && orderItem[0] ? orderItem[0].quantity + _arg.quantity : _arg.quantity,
 					},
 					create: {
 						quantity: _arg.quantity,
