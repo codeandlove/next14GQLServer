@@ -9,6 +9,8 @@ extend type Query {
 
 	order(id: ID!, status: OrderStatus): Order!
 
+	orders(userId: ID!): [Order!]!
+
 	product(id: ID, slug: String): Product!
 
 	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, search: String, take: Int!, skip: Int!): ProductList!
@@ -22,6 +24,8 @@ extend type Mutation {
 	createOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
 	updateOrderItem( orderId: ID!, productId: ID!, quantity: Int!): Order!
 	removeOrderItem( orderId: ID!, productId: ID!): Order!
+
+	placeOrder(orderId: ID!, email: String!, userId: ID, sessionId: String, totalAmount: Int!): Order!
 
 	createReview( productId: ID!, headline: String!, content: String!, rating: Int!, name: String!, email: String!): Review!
 
@@ -77,7 +81,11 @@ type Order {
 	totalAmount: Int!
 	status: OrderStatus!
 	orderItems: [OrderItem!]!
-	lines: String
+
+	email: String
+	userId: ID
+	sessionId: String
+
 	createdAt: DateTime!
 	updatedAt: DateTime!
 }
