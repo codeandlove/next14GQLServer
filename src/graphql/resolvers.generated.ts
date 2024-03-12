@@ -8,6 +8,7 @@ import { Meta } from "./schema/resolvers/Meta";
 import { createOrder as Mutation_createOrder } from "./schema/resolvers/Mutation/createOrder";
 import { createOrderItem as Mutation_createOrderItem } from "./schema/resolvers/Mutation/createOrderItem";
 import { createReview as Mutation_createReview } from "./schema/resolvers/Mutation/createReview";
+import { placeOrder as Mutation_placeOrder } from "./schema/resolvers/Mutation/placeOrder";
 import { removeOrderItem as Mutation_removeOrderItem } from "./schema/resolvers/Mutation/removeOrderItem";
 import { updateOrderItem as Mutation_updateOrderItem } from "./schema/resolvers/Mutation/updateOrderItem";
 import { Order } from "./schema/resolvers/Order";
@@ -19,6 +20,7 @@ import { category as Query_category } from "./schema/resolvers/Query/category";
 import { collection as Query_collection } from "./schema/resolvers/Query/collection";
 import { collections as Query_collections } from "./schema/resolvers/Query/collections";
 import { order as Query_order } from "./schema/resolvers/Query/order";
+import { orders as Query_orders } from "./schema/resolvers/Query/orders";
 import { product as Query_product } from "./schema/resolvers/Query/product";
 import { products as Query_products } from "./schema/resolvers/Query/products";
 import { reviews as Query_reviews } from "./schema/resolvers/Query/reviews";
@@ -31,6 +33,7 @@ export const resolvers: Resolvers = {
 		collection: Query_collection,
 		collections: Query_collections,
 		order: Query_order,
+		orders: Query_orders,
 		product: Query_product,
 		products: Query_products,
 		reviews: Query_reviews,
@@ -39,6 +42,7 @@ export const resolvers: Resolvers = {
 		createOrder: Mutation_createOrder,
 		createOrderItem: Mutation_createOrderItem,
 		createReview: Mutation_createReview,
+		placeOrder: Mutation_placeOrder,
 		removeOrderItem: Mutation_removeOrderItem,
 		updateOrderItem: Mutation_updateOrderItem,
 	},

@@ -72,6 +72,7 @@ export type Mutation = {
 	createOrder: Order;
 	createOrderItem: Order;
 	createReview: Review;
+	placeOrder: Order;
 	removeOrderItem: Order;
 	updateOrderItem: Order;
 };
@@ -91,6 +92,14 @@ export type MutationcreateReviewArgs = {
 	rating: Scalars["Int"]["input"];
 };
 
+export type MutationplaceOrderArgs = {
+	email: Scalars["String"]["input"];
+	orderId: Scalars["ID"]["input"];
+	sessionId?: InputMaybe<Scalars["String"]["input"]>;
+	totalAmount: Scalars["Int"]["input"];
+	userId?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
 export type MutationremoveOrderItemArgs = {
 	orderId: Scalars["ID"]["input"];
 	productId: Scalars["ID"]["input"];
@@ -105,12 +114,14 @@ export type MutationupdateOrderItemArgs = {
 export type Order = {
 	__typename?: "Order";
 	createdAt: Scalars["DateTime"]["output"];
+	email?: Maybe<Scalars["String"]["output"]>;
 	id: Scalars["ID"]["output"];
-	lines?: Maybe<Scalars["String"]["output"]>;
 	orderItems: Array<OrderItem>;
+	sessionId?: Maybe<Scalars["String"]["output"]>;
 	status: OrderStatus;
 	totalAmount: Scalars["Int"]["output"];
 	updatedAt: Scalars["DateTime"]["output"];
+	userId?: Maybe<Scalars["ID"]["output"]>;
 };
 
 export type OrderItem = {
@@ -156,6 +167,7 @@ export type Query = {
 	collection: Collection;
 	collections: CollectionList;
 	order: Order;
+	orders: Array<Order>;
 	product: Product;
 	products: ProductList;
 	reviews: Array<Review>;
@@ -184,6 +196,10 @@ export type QuerycollectionsArgs = {
 export type QueryorderArgs = {
 	id: Scalars["ID"]["input"];
 	status?: InputMaybe<OrderStatus>;
+};
+
+export type QueryordersArgs = {
+	userId: Scalars["ID"]["input"];
 };
 
 export type QueryproductArgs = {
@@ -431,6 +447,12 @@ export type MutationResolvers<
 			"content" | "email" | "headline" | "name" | "productId" | "rating"
 		>
 	>;
+	placeOrder?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationplaceOrderArgs, "email" | "orderId" | "totalAmount">
+	>;
 	removeOrderItem?: Resolver<
 		ResolversTypes["Order"],
 		ParentType,
@@ -450,12 +472,14 @@ export type OrderResolvers<
 	ParentType extends ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
 > = {
 	createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	email?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	lines?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
 	orderItems?: Resolver<Array<ResolversTypes["OrderItem"]>, ParentType, ContextType>;
+	sessionId?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
 	status?: Resolver<ResolversTypes["OrderStatus"], ParentType, ContextType>;
 	totalAmount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	userId?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -531,6 +555,12 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QueryorderArgs, "id">
+	>;
+	orders?: Resolver<
+		Array<ResolversTypes["Order"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryordersArgs, "userId">
 	>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
 	products?: Resolver<
