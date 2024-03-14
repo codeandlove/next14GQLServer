@@ -22,6 +22,20 @@ export const products: NonNullable<QueryResolvers["products"]> = async (_parent,
 				collections: true,
 			},
 		});
+	} else if (_arg.ids) {
+		result = await prisma.product.findMany({
+			skip: _arg.skip,
+			take: _arg.take,
+			where: {
+				id: {
+					in: _arg.ids,
+				},
+			},
+			include: {
+				categories: true,
+				collections: true,
+			},
+		});
 	} else {
 		result = await prisma.product.findMany({
 			skip: _arg.skip,

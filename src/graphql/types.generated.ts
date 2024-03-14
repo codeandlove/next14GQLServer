@@ -208,6 +208,7 @@ export type QueryproductArgs = {
 };
 
 export type QueryproductsArgs = {
+	ids?: InputMaybe<Array<Scalars["ID"]["input"]>>;
 	order?: SortDirection;
 	orderBy?: ProductsSortBy;
 	search?: InputMaybe<Scalars["String"]["input"]>;

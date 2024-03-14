@@ -13,7 +13,7 @@ extend type Query {
 
 	product(id: ID, slug: String): Product!
 
-	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, search: String, take: Int!, skip: Int!): ProductList!
+	products(order: SortDirection! = ASC, orderBy: ProductsSortBy! = DEFAULT, ids: [ID!] search: String, take: Int!, skip: Int!): ProductList!
 
 	reviews(productId: ID!): [Review!]!
 }
